@@ -17,7 +17,7 @@ public class MétierWeight implements IMétierWeight{
     IDao<Weight,Long> weightDao;
     @Override
     public Weight calculerIMC(Long idWeight) throws Exception {
-        var weight = weightDao.trouverParId(idWeight);
+        var weight = weightDao.findById(idWeight);
         if (weight == null) throw new Exception(" Id du weight est incorrect id introuvable :: [weight id non trouvé]");
         else {
             double taille = weight.getHeight();
@@ -25,10 +25,6 @@ public class MétierWeight implements IMétierWeight{
             double imc = poids / (taille * taille);
              imc = Math.round(imc * 100) / 100;
             weight.setBmi(imc);
-
-
-
-
         }
         return weight;
     }

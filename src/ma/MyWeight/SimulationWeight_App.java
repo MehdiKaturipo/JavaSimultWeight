@@ -1,6 +1,6 @@
 package ma.MyWeight;
 
-import ma.MyWeight.dao.WeightDao;
+import ma.MyWeight.dao.daoVolatile.WeightDao;
 import ma.MyWeight.dao.IDao;
 import ma.MyWeight.modéle.Weight;
 import ma.MyWeight.métier.IMétierWeight;
@@ -41,10 +41,10 @@ public class SimulationWeight_App {
             try {
                 String input = "";
                 while (true) {
-                    System.out.println("Entrer l'Id du poids : ");
+                    System.out.println("Entrer l'Id  : ");
                     input = clavier.nextLine();
                     if (estUnEntier(input)) break;
-                    System.err.println("Erreur : l'Id du poid doit être un entier");
+                    System.err.println("Erreur : l'Id  doit être un entier");
                 }
                 long id = Long.parseLong(input);
                 controlleur.afficherIMC(id);
@@ -99,6 +99,7 @@ public class SimulationWeight_App {
                 setDao.invoke(métier, dao);
                 Method setMétier = cControlleur.getMethod("setMétierWeight", IMétierWeight.class);
                 setMétier.invoke(weightControlleur, métier);
+                System.out.println("==> [Test 2] calcule IMC  de poids <==\n ");
                 weightControlleur.afficherIMC(3L);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -108,17 +109,19 @@ public class SimulationWeight_App {
     public  static void test3() throws Exception{
         ApplicationContext context = new ClassPathXmlApplicationContext("ma/MyWeight/spring-ioc.xml");
         weightControlleur = context.getBean(IWeightControlleur.class);
+        System.out.println("==> [Test 3] calcule IMC  de poids <==\n ");
         weightControlleur.afficherIMC(5L);
     }
     public  static void test4() throws Exception{
         ApplicationContext context = new AnnotationConfigApplicationContext("ma.MyWeight");
         weightControlleur =  context.getBean(IWeightControlleur.class);
+        System.out.println("==> [Test 4] calcule IMC  de poids <==\n ");
         weightControlleur.afficherIMC(5L);
     }
     public static void main (String[] args) throws Exception {
         //test1();
         //test2();
-         //test3();
+        // test3();
         test4();
     }
 }
